@@ -23,7 +23,7 @@ def update(state):
 				 np.where( lives_rule, 1,
 			  			np.where(birth_rule, 1, state)))
 
-def plot(cells, canvas, color_factor=200):
+def plot(cells, canvas, color_factor):
 	""" Depending on how the image is rendered, colors should be floats in (0, 1) or (0, 255). """
 	height, width   = canvas.shape[:2]
 	gheight, gwidth = cells.shape
@@ -36,7 +36,7 @@ def plot(cells, canvas, color_factor=200):
 		Y = (y*d) + d//2
 		canvas[Y-r:Y+r, X-r:X+r] = np.random.uniform(.3, .9, 3)*color_factor
  
-def gen(height, width, color_factor=255):
+def gen(height, width, color_factor=1):
 	cells  = init_cells()
 	canvas = np.zeros((height, width, 3), np.float32)
 	cache  = []
@@ -54,7 +54,7 @@ def gen(height, width, color_factor=255):
 			cache.append(np.copy(cells['state']))
 			cells['state'] = new_state
 
-		plot(cells, canvas)
+		plot(cells, canvas, color_factor)
 		yield canvas
 		time.sleep(.5)
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
 	import cv2
 	w = cv2.namedWindow("win")
-	for frame in gen(height, width, color_factor=1):
+	for frame in gen(height, width):
 		cv2.imshow('win', frame)
 		if cv2.waitKey(int(1000/60)) != -1:
 		 	break
