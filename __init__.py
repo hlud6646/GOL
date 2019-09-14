@@ -6,10 +6,11 @@ from itertools import product
 
 def init_cells():
     height, width = 36, 72
-    cells = np.empty((height, width), dtype=[('state',     bool,     1),
-                                             ('age',     int,     1),
-                                             ('color',     float,     3)])
+    cells = np.empty((height, width), dtype=[('state',  bool,     1),
+                                             ('age',    int,     1),
+                                             ('color',  float,     3)])
     cells['state'] = np.random.choice([0, 1], (height, width), p=[.7, .3])
+    cells['color'] = np.random.uniform(.3, .9, (height, width, 3))
     return cells
 
 
@@ -40,10 +41,10 @@ def plot(cells, canvas, color_factor):
             continue
         X = (x*d) + d//2
         Y = (y*d) + d//2
-        canvas[Y-r:Y+r, X-r:X+r] = np.random.uniform(.3, .9, 3)*color_factor
+        canvas[Y-r:Y+r, X-r:X+r] = cells['color'][y][x]*255
 
 
-def gen(height, width, color_factor=1):
+def gen(height, width, color_factor=255):
     cells = init_cells()
     canvas = np.zeros((height, width, 3), np.float32)
     cache = []
