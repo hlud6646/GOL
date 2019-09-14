@@ -63,7 +63,6 @@ def gen(height, width, color_factor=1):
 
         plot(cells, canvas, color_factor)
         yield canvas
-        time.sleep(.5)
 
 
 if __name__ == "__main__":
