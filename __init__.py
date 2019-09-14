@@ -6,9 +6,8 @@ from itertools import product
 
 def init_cells():
     height, width = 36, 72
-    cells = np.empty((height, width), dtype=[('state',  bool,     1),
-                                             ('age',    int,     1),
-                                             ('color',  float,     3)])
+    cells = np.empty((height, width), dtype=[('state',  bool,    1),
+                                             ('color',  float,   3)])
     cells['state'] = np.random.choice([0, 1], (height, width), p=[.7, .3])
     cells['color'] = np.random.uniform(.3, .9, (height, width, 3))
     return cells
@@ -30,8 +29,8 @@ def update(state):
 
 
 def plot(cells, canvas, color_factor):
-    """ Depending on how the image is rendered,
-        colors should be floats in (0, 1) or (0, 255). """
+    """ The scale of color values depends on how images are drawn.
+        This is the purpose of the color_factor argument. """
     height, width = canvas.shape[:2]
     gheight, gwidth = cells.shape
     d = height//gheight
